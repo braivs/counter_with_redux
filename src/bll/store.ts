@@ -6,15 +6,12 @@ const rootReducer = combineReducers({
   counter: counterReducer
 })
 
-// export const store = createStore(rootReducer, loadState()); // TODO: забор данных из localStorage
+export const store = createStore(rootReducer, loadState());
 
-export const store = createStore(rootReducer);
-
-// TODO: work with localstorage
-/*store.subscribe(() => {
+store.subscribe(() => {
   saveState({
     counter: store.getState().counter
   })
-})*/
+})
 
 export type AppStateType = ReturnType<typeof rootReducer>
