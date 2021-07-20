@@ -1,28 +1,44 @@
-import {useDispatch} from "react-redux";
-import {counterReducer, incValueAC, InitialStateType} from "./counter-reducer";
-import {AppStateType} from "./store";
-import {saveState} from "../utils/localstorage-utils";
+import {
+  counterReducer,
+  incValueAC,
+  initialState,
+  InitialStateType,
+  resetValueAC, setIsErrorAC, setIsMessageAC, setMaxValueAC,
+  setStartValueAC
+} from "./counter-reducer";
 
-// let InitialStateType: InitialStateType;
-// let startState: InitialStateType
+let startState: InitialStateType;
 
 beforeEach(() => {
-  let state: AppStateType = {'counter': {'value': 1}}
-  // startState = {value: 1}
-})
-
-test('get value from local storage', () => {
-
-  const serializedState = JSON.stringify(state)
-
-  if (serializedState !== null) {
-    console.log(JSON.parse(serializedState))
-  }
-
+  startState = initialState;
 })
 
 test('inc counter', () => {
-  const startState: InitialStateType = {value: 1};
   const endState = counterReducer(startState, incValueAC())
-  expect(endState.value).toEqual(2)
+  expect(endState.value).toBe(1)
+})
+
+test('reset counter', () => {
+  const endState = counterReducer(startState, resetValueAC())
+  expect(endState.value).toBe(startState.startValue)
+})
+
+test('set start value', () => {
+  const endState = counterReducer(startState, setStartValueAC(10))
+  expect(endState.startValue).toBe(10)
+})
+
+test('set max value', () => {
+  const endState = counterReducer(startState, setMaxValueAC(20))
+  expect(endState.maxValue).toBe(20)
+})
+
+test('set isMessage value', () => {
+  const endState = counterReducer(startState, setIsMessageAC(true))
+  expect(endState.isMessage).toBe(true)
+})
+
+test('set isError value', () => {
+  const endState = counterReducer(startState, setIsErrorAC(true))
+  expect(endState.isError).toBe(true)
 })
