@@ -1,4 +1,4 @@
-export const initialState = {
+export const counterInitialState = {
   value: 0,
   startValue: 0,
   maxValue: 5,
@@ -6,9 +6,9 @@ export const initialState = {
   isError: false
 }
 
-export type InitialStateType = typeof initialState
+export type CounterInitialStateType = typeof counterInitialState
 
-export const counterReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
+export const counterReducer = (state: CounterInitialStateType = counterInitialState, action: ActionType): CounterInitialStateType => {
   switch (action.type) {
     case "SET-VALUE": {
       return {...state, value: action.value}

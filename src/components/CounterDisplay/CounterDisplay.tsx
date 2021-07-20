@@ -21,7 +21,6 @@ export function CounterDisplay(props: CounterDisplayPropsType) {
   const dispatch = useDispatch()
   // / NEW
 
-
   let [valueClass, setValueClass] = useState('') // для разных цветов значения
   let [isIncButtonDisabled, setIsIncButtonDisabled] = useState(false) //блокировка inc кнопки
   let [isResetButtonDisabled, setIsResetButtonDisabled] = useState(false) //блокировка reset кнопки

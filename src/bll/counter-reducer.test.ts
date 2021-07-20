@@ -1,16 +1,16 @@
 import {
   counterReducer,
   incValueAC,
-  initialState,
-  InitialStateType,
+  counterInitialState,
+  CounterInitialStateType,
   resetValueAC, setIsErrorAC, setIsMessageAC, setMaxValueAC,
   setStartValueAC, setValueAC
 } from "./counter-reducer";
 
-let startState: InitialStateType;
+let startState: CounterInitialStateType;
 
 beforeEach(() => {
-  startState = initialState;
+  startState = counterInitialState;
 })
 
 test('set counter current value', () => {
