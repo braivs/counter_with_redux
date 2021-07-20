@@ -4,13 +4,18 @@ import {
   initialState,
   InitialStateType,
   resetValueAC, setIsErrorAC, setIsMessageAC, setMaxValueAC,
-  setStartValueAC
+  setStartValueAC, setValueAC
 } from "./counter-reducer";
 
 let startState: InitialStateType;
 
 beforeEach(() => {
   startState = initialState;
+})
+
+test('set counter current value', () => {
+  const endState = counterReducer(startState, setValueAC(5))
+  expect(endState.value).toBe(5)
 })
 
 test('inc counter', () => {

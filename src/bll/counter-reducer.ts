@@ -10,6 +10,9 @@ export type InitialStateType = typeof initialState
 
 export const counterReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
   switch (action.type) {
+    case "SET-VALUE": {
+      return {...state, value: action.value}
+    }
     case "INC-VALUE": {
       return {...state, value: state.value + 1 }
     }
@@ -33,6 +36,7 @@ export const counterReducer = (state: InitialStateType = initialState, action: A
   }
 }
 
+export const setValueAC = (newValue: number) => ({type: 'SET-VALUE', value: newValue} as const)
 export const incValueAC = () => ({type: 'INC-VALUE'} as const)
 export const resetValueAC = () => ({type: 'RESET-VALUE'} as const)
 export const setStartValueAC = (newValue: number) => ({type: 'SET-START-VALUE', startValue: newValue} as const)
@@ -40,11 +44,12 @@ export const setMaxValueAC = (newValue: number) => ({type: 'SET-MAX-VALUE', maxV
 export const setIsMessageAC = (newValue: boolean) => ({type: 'SET-IS-MESSAGE', isMessage: newValue} as const)
 export const setIsErrorAC = (newValue: boolean) => ({type: 'SET-IS-ERROR', isError: newValue} as const)
 
+type SetValueAT = ReturnType<typeof setValueAC>
 type IncValuesActionType = ReturnType<typeof incValueAC>
 type ResetValueAT = ReturnType<typeof resetValueAC>
-type setStartValueAT = ReturnType<typeof setStartValueAC>
-type setMaxValueAT = ReturnType<typeof setMaxValueAC>
-type setIsMessageAT = ReturnType<typeof setIsMessageAC>
-type setIsErrorAT = ReturnType<typeof setIsErrorAC>
+type SetStartValueAT = ReturnType<typeof setStartValueAC>
+type SetMaxValueAT = ReturnType<typeof setMaxValueAC>
+type SetIsMessageAT = ReturnType<typeof setIsMessageAC>
+type SetIsErrorAT = ReturnType<typeof setIsErrorAC>
 
-type ActionType = IncValuesActionType | ResetValueAT | setStartValueAT | setMaxValueAT | setIsMessageAT | setIsErrorAT
+type ActionType = SetValueAT | IncValuesActionType | ResetValueAT | SetStartValueAT | SetMaxValueAT | SetIsMessageAT | SetIsErrorAT

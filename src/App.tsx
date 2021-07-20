@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Redirect, Route } from 'react-router-dom';
 import './App.scss';
 import {Navbar} from "./components/Navbar/Navbar";
@@ -6,7 +6,7 @@ import {Counter2} from "./components/Counter2/Counter2";
 import {Counter21} from "./components/Counter21";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "./bll/store";
-import {setIsMessageAC, setMaxValueAC, setStartValueAC} from "./bll/counter-reducer";
+import {setIsErrorAC, setIsMessageAC, setMaxValueAC, setStartValueAC, setValueAC} from "./bll/counter-reducer";
 
 function App() {
   const value = useSelector<AppStateType, number>(state => state.counter.value)
@@ -16,6 +16,11 @@ function App() {
   const isError = useSelector<AppStateType, boolean>(state => state.counter.isError);
 
   const dispatch = useDispatch()
+  // формирование ошибки
+  useEffect(() => {
+    let error = (maxValue <= startValue || startValue < 0)
+    dispatch(setIsErrorAC(error))
+  }, [startValue, maxValue])
 
   // изменение стартового значения в settings
   const startValueHandler = (newValue: number) => {
@@ -33,8 +38,10 @@ function App() {
   const setValuesHandler = () => {
     // TODO: тут возможно должна быть установка в localStorage
     dispatch(setIsMessageAC(false))
-    dispatch(dispatch(setStartValueAC(startValue)))
+    dispatch(dispatch(setValueAC(startValue)))
   }
+
+
 
   return (
     <div className="App">
