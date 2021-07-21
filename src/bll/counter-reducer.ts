@@ -41,8 +41,8 @@ export const incValueAC = () => ({type: 'INC-VALUE'} as const)
 export const resetValueAC = () => ({type: 'RESET-VALUE'} as const)
 export const setStartValueAC = (newValue: number) => ({type: 'SET-START-VALUE', startValue: newValue} as const)
 export const setMaxValueAC = (newValue: number) => ({type: 'SET-MAX-VALUE', maxValue: newValue} as const)
-export const setIsMessageAC = (newValue: boolean) => ({type: 'SET-IS-MESSAGE', isMessage: newValue} as const)
-export const setIsErrorAC = (newValue: boolean) => ({type: 'SET-IS-ERROR', isError: newValue} as const)
+export const setIsMessageAC = (isMessage: boolean) => ({type: 'SET-IS-MESSAGE', isMessage} as const)
+export const setIsErrorAC = (isError: boolean) => ({type: 'SET-IS-ERROR', isError} as const)
 
 type SetValueAT = ReturnType<typeof setValueAC>
 type IncValuesActionType = ReturnType<typeof incValueAC>

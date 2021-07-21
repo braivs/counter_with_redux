@@ -20,9 +20,6 @@ type CounterDisplayPropsType = {
 export function CounterDisplay(props: CounterDisplayPropsType) {
 
   const dispatch = useDispatch()
-  /*let [valueClass, setValueClass] = useState('') // для разных цветов значения
-  let [isIncButtonDisabled, setIsIncButtonDisabled] = useState(false) //блокировка inc кнопки
-  let [isResetButtonDisabled, setIsResetButtonDisabled] = useState(false) //блокировка reset кнопки*/
   const history = useHistory() //для изменение адреса
 
   const valueClass = useSelector<AppStateType, string>(state => state.display.valueClass)
@@ -32,7 +29,6 @@ export function CounterDisplay(props: CounterDisplayPropsType) {
   // Формирование разных цветов счётчика по условиям
   useEffect(() => {
     if (props.isError || (props.maxValue === props.value && !props.isMessage)) {
-      // setValueClass(s.redValueColor)
       dispatch(setClassAC(s.redValueColor))
     } else {
       dispatch(setClassAC(''))
@@ -42,18 +38,12 @@ export function CounterDisplay(props: CounterDisplayPropsType) {
   // блокировка кнопок Inc и Reset по условиям
   useEffect(() => {
       if (props.isMessage) {
-        /*setIsIncButtonDisabled(true)
-        setIsResetButtonDisabled(true)*/
         dispatch(setIsIncButtonDisabledAC(true))
         dispatch(setIsResetButtonDisabledAC(true))
       } else if (props.value === props.startValue) {
-        /*setIsIncButtonDisabled(false)
-        setIsResetButtonDisabled(true)*/
         dispatch(setIsIncButtonDisabledAC(false))
         dispatch(setIsResetButtonDisabledAC(true))
       } else if (props.maxValue === props.value) {
-        /*setIsIncButtonDisabled(true)
-        setIsResetButtonDisabled(false)*/
         dispatch(setIsIncButtonDisabledAC(true))
         dispatch(setIsResetButtonDisabledAC(false))
       } else {

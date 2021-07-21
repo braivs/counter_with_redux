@@ -36,9 +36,8 @@ function App() {
 
   // обработчик для кнопки set в settings
   const setValuesHandler = () => {
-    // TODO: тут возможно должна быть установка в localStorage
     dispatch(setIsMessageAC(false))
-    dispatch(dispatch(setValueAC(startValue)))
+    dispatch(setValueAC(startValue))
   }
 
 
