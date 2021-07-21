@@ -20,7 +20,7 @@ function App() {
   useEffect(() => {
     let error = (maxValue <= startValue || startValue < 0)
     dispatch(setIsErrorAC(error))
-  }, [startValue, maxValue])
+  }, [startValue, maxValue, dispatch])
 
   // изменение стартового значения в settings
   const startValueHandler = (newValue: number) => {

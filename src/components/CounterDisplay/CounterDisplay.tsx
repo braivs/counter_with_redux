@@ -1,10 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import s from './CounterDisplay.module.scss'
 import '../../App.scss'
 import {CustomButton} from '../CustomButton/CustomButton';
 import {useHistory} from 'react-router-dom';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {incValueAC, resetValueAC} from "../../bll/counter-reducer";
+import {setClassAC, setIsIncButtonDisabledAC, setIsResetButtonDisabledAC} from "../../bll/display-reducer";
+import {AppStateType} from "../../bll/store";
 
 type CounterDisplayPropsType = {
   type: 'Counter2' | 'Counter21'
@@ -17,41 +19,49 @@ type CounterDisplayPropsType = {
 
 export function CounterDisplay(props: CounterDisplayPropsType) {
 
-  // NEW
   const dispatch = useDispatch()
-  // / NEW
-
-  let [valueClass, setValueClass] = useState('') // для разных цветов значения
+  /*let [valueClass, setValueClass] = useState('') // для разных цветов значения
   let [isIncButtonDisabled, setIsIncButtonDisabled] = useState(false) //блокировка inc кнопки
-  let [isResetButtonDisabled, setIsResetButtonDisabled] = useState(false) //блокировка reset кнопки
+  let [isResetButtonDisabled, setIsResetButtonDisabled] = useState(false) //блокировка reset кнопки*/
   const history = useHistory() //для изменение адреса
+
+  const valueClass = useSelector<AppStateType, string>(state => state.display.valueClass)
+  const isIncButtonDisabled = useSelector<AppStateType, boolean>(state => state.display.isIncButtonDisabled)
+  const isResetButtonDisabled = useSelector<AppStateType, boolean>(state => state.display.isResetButtonDisabled)
 
   // Формирование разных цветов счётчика по условиям
   useEffect(() => {
     if (props.isError || (props.maxValue === props.value && !props.isMessage)) {
-      setValueClass(s.redValueColor)
+      // setValueClass(s.redValueColor)
+      dispatch(setClassAC(s.redValueColor))
     } else {
-      setValueClass('')
+      dispatch(setClassAC(''))
     }
-  }, [props.isMessage, props.isError, props.value, props.maxValue, setValueClass])
+  }, [props.isMessage, props.isError, props.value, props.maxValue/*, setValueClass*/, dispatch])
 
   // блокировка кнопок Inc и Reset по условиям
   useEffect(() => {
       if (props.isMessage) {
-        setIsIncButtonDisabled(true)
-        setIsResetButtonDisabled(true)
+        /*setIsIncButtonDisabled(true)
+        setIsResetButtonDisabled(true)*/
+        dispatch(setIsIncButtonDisabledAC(true))
+        dispatch(setIsResetButtonDisabledAC(true))
       } else if (props.value === props.startValue) {
-        setIsIncButtonDisabled(false)
-        setIsResetButtonDisabled(true)
+        /*setIsIncButtonDisabled(false)
+        setIsResetButtonDisabled(true)*/
+        dispatch(setIsIncButtonDisabledAC(false))
+        dispatch(setIsResetButtonDisabledAC(true))
       } else if (props.maxValue === props.value) {
-        setIsIncButtonDisabled(true)
-        setIsResetButtonDisabled(false)
+        /*setIsIncButtonDisabled(true)
+        setIsResetButtonDisabled(false)*/
+        dispatch(setIsIncButtonDisabledAC(true))
+        dispatch(setIsResetButtonDisabledAC(false))
       } else {
-        setIsIncButtonDisabled(false)
-        setIsResetButtonDisabled(false)
+        dispatch(setIsIncButtonDisabledAC(false))
+        dispatch(setIsResetButtonDisabledAC(false))
       }
     },
-    [props.isMessage, props.value, props.startValue, props.maxValue])
+    [props.isMessage, props.value, props.startValue, props.maxValue, dispatch])
 
   // разные сообщения в зависимости от наличия ошибки
   let messageText = (props.isError) ? 'Incorrect value!' : 'enter values and press set'
